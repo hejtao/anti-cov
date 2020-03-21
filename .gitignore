@@ -1,0 +1,44 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+main
+baisen-server
+baisen-server.exe
+baisen-server.exe~
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
+.glide/
+*.log
+.idea/*
+
+# Temp files
+*.tmp
+
+# Swagger files
+swagger/*
+
+# excel files
+static/*.xlsx
+static/*.zip
+
+# redis filw
+dump.rdb
+
+# mac file
+.DS_Store
+
+# image
+/static/image/*.jpg
+/static/img/*.jpg
+
+/.vscode
+
+lastupdate.tmp
