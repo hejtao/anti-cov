@@ -2,7 +2,6 @@ package routers
 
 import (
 	"antiCov-server/controllers"
-	"antiCov-server/models"
 	"antiCov-server/utils"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
@@ -13,16 +12,27 @@ func init() {
 	beego.Router("/*", &controllers.BaseController{}, "options:TestOptions")
 
 	ns := beego.NewNamespace("/v1",
+		beego.NSNamespace("/pr",
+			beego.NSNamespace("/template",
+				beego.NSInclude(
+					&controllers.TemplateController{},
+				),
 
-		beego.NSNamespace("/admin",
+				// Todo
+
+			),
+		),
+
+		beego.NSNamespace("/pub",
 			beego.NSInclude(
-				&controllers.TemplateController{},
+				&controllers.PublicController{},
 			),
 		),
 	)
+
 	beego.AddNamespace(ns)
 
-	beego.InsertFilter("/v1/admin/add", beego.BeforeStatic, TokenFilter)
+	beego.InsertFilter("/v1/pr/*", beego.BeforeStatic, TokenFilter)
 }
 
 // TokenFilter 该过滤器要求请求都带有一个user或者admin的token string
@@ -45,13 +55,7 @@ var TokenFilter = func(ctx *context.Context) {
 		return
 	}
 
-	admin := models.GetAdminById(id)
-	if admin.Id == 0 {
-		tokenAuthError(ctx)
-		return
-	}
-
-	ctx.Input.SetData("currAdmin", admin)
+	ctx.Input.SetData("accountId", id)
 }
 
 //Token鉴权失败返回

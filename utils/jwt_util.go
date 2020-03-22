@@ -18,9 +18,9 @@ type JWTClaims struct {
 }
 
 //生成管理员Token
-func GenerateAdminTokenString(adminId int) (string, error) {
+func GenerateTokenString(id int) (string, error) {
 	claims := JWTClaims{
-		Id: adminId,
+		Id: id,
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix(),
 			IssuedAt:  time.Now().Unix(),

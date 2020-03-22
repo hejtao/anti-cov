@@ -1,6 +1,9 @@
 package utils
 
 import (
+	"crypto/sha256"
+	"fmt"
+	"io"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -142,4 +145,12 @@ func ParseTime(rawTime string) (parsedTime time.Time) {
 	}
 
 	return
+}
+
+// Encrypt use sha256 to hash the password
+func Encrypt(password string) string {
+	h := sha256.New()
+	_, _ = io.WriteString(h, "dB924YD"+password+"xuLwLdj")
+	return fmt.Sprintf("%x", h.Sum(nil))
+
 }

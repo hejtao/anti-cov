@@ -13,7 +13,7 @@ type TemplateController struct {
 // @description 创建
 // @router /template/create [post]
 func (c *TemplateController) CreateTemplate() {
-	currAdmin := c.Ctx.Input.GetData("currAdmin").(*models.Admin)
+	currAdmin := models.GetAdminByAccountId(c.Ctx.Input.GetData("accountId").(int))
 	_ = currAdmin
 
 	template := new(models.Template)
@@ -40,7 +40,7 @@ func (c *TemplateController) CreateTemplate() {
 // @description 获取列表
 // @router /templates [get]
 func (c *TemplateController) GetTemplates() {
-	currAdmin := c.Ctx.Input.GetData("currAdmin").(*models.Admin)
+	currAdmin := models.GetAdminByAccountId(c.Ctx.Input.GetData("accountId").(int))
 	_ = currAdmin
 
 	page, err := c.GetInt("page")
@@ -56,7 +56,7 @@ func (c *TemplateController) GetTemplates() {
 // @description 删除
 // @router /templates/delete [get]
 func (c *TemplateController) DeleteTemplate() {
-	currAdmin := c.Ctx.Input.GetData("currAdmin").(*models.Admin)
+	currAdmin := models.GetAdminByAccountId(c.Ctx.Input.GetData("accountId").(int))
 	_ = currAdmin
 
 	id, err := c.GetInt("id")
@@ -76,7 +76,7 @@ func (c *TemplateController) DeleteTemplate() {
 // @description
 // @router /template [get]
 func (c *TemplateController) GetTemplate() {
-	currAdmin := c.Ctx.Input.GetData("currAdmin").(*models.Admin)
+	currAdmin := models.GetAdminByAccountId(c.Ctx.Input.GetData("accountId").(int))
 	_ = currAdmin
 
 	id, err := c.GetInt("id")
@@ -91,7 +91,7 @@ func (c *TemplateController) GetTemplate() {
 // @description 更新
 // @router /template/update [put]
 func (c *TemplateController) UpdateTemplate() {
-	currAdmin := c.Ctx.Input.GetData("currAdmin").(*models.Admin)
+	currAdmin := models.GetAdminByAccountId(c.Ctx.Input.GetData("accountId").(int))
 	_ = currAdmin
 
 	template := new(models.Template)
