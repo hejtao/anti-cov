@@ -12,14 +12,9 @@ func init() {
 	beego.Router("/*", &controllers.BaseController{}, "options:TestOptions")
 
 	ns := beego.NewNamespace("/v1",
-		beego.NSNamespace("/pr",
-			beego.NSNamespace("/template",
-				beego.NSInclude(
-					&controllers.TemplateController{},
-				),
-
-				// Todo
-
+		beego.NSNamespace("/pri",
+			beego.NSInclude(
+				&controllers.PrivateController{},
 			),
 		),
 
@@ -32,7 +27,7 @@ func init() {
 
 	beego.AddNamespace(ns)
 
-	beego.InsertFilter("/v1/pr/*", beego.BeforeStatic, TokenFilter)
+	beego.InsertFilter("/v1/pri/*", beego.BeforeStatic, TokenFilter)
 }
 
 // TokenFilter 该过滤器要求请求都带有一个user或者admin的token string

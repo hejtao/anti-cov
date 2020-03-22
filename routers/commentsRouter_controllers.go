@@ -7,56 +7,56 @@ import (
 
 func init() {
 
-	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
+	beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"],
 		beego.ControllerComments{
-			Method:           "Login",
-			Router:           `/login`,
-			AllowHTTPMethods: []string{"post"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"],
-		beego.ControllerComments{
-			Method:           "GetTemplate",
-			Router:           `/template`,
+			Method:           "GetArticle",
+			Router:           `/article`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"],
+	beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"],
 		beego.ControllerComments{
-			Method:           "CreateTemplate",
-			Router:           `/template/create`,
+			Method:           "CreateArticle",
+			Router:           `/article/create`,
 			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"],
+	beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"],
 		beego.ControllerComments{
-			Method:           "UpdateTemplate",
-			Router:           `/template/update`,
+			Method:           "DeleteArticle",
+			Router:           `/article/delete`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"],
+		beego.ControllerComments{
+			Method:           "UpdateArticle",
+			Router:           `/article/update`,
 			AllowHTTPMethods: []string{"put"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"],
+	beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"],
 		beego.ControllerComments{
-			Method:           "GetTemplates",
-			Router:           `/templates`,
-			AllowHTTPMethods: []string{"get"},
+			Method:           "GetArticles",
+			Router:           `/articles`,
+			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:TemplateController"],
+	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
-			Method:           "DeleteTemplate",
-			Router:           `/templates/delete`,
-			AllowHTTPMethods: []string{"get"},
+			Method:           "Login",
+			Router:           `/login`,
+			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})

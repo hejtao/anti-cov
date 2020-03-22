@@ -50,7 +50,7 @@ func initDatabase() error {
 	err = orm.RegisterDataBase(
 		"default",
 		"mysql",
-		"root:eduyibo2016@tcp(120.78.143.216)/anti_cov?charset=utf8&loc=Asia%2FShanghai",
+		"root:eduyibo2016@tcp(120.78.143.216)/anti_cov?charset=utf8mb4&loc=Asia%2FShanghai",
 	)
 	if err != nil {
 		return err

@@ -39,6 +39,13 @@ func (c *PublicController) Login() {
 		return
 	}
 
+	data := make(map[string]interface{})
 	token, err := utils.GenerateTokenString(account.Id)
-	c.ReturnSuccess(1, "ok", token)
+	if err != nil {
+		c.ReturnSuccess(2, err.Error(), nil)
+	}
+	data["token"] = token
+	data["admin_name"] = models.GetAdminByAccountId(account.Id).Name
+
+	c.ReturnSuccess(1, "ok", data)
 }
