@@ -48,4 +48,17 @@ func (c *PublicController) Login() {
 	data["admin_name"] = models.GetAdminByAccountId(account.Id).Name
 
 	c.ReturnSuccess(1, "ok", data)
+
+}
+
+// @description 登录
+// @router /admin [get]
+func (c *PublicController) GetAdminByToken() {
+	id, err := utils.ParseTokenString(c.GetString("token"))
+	if err != nil {
+		c.ReturnSuccess(2, err.Error(), nil)
+		return
+	}
+
+	c.ReturnSuccess(1, "ok", models.GetAdminByAccountId(id).Name)
 }

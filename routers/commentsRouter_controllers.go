@@ -54,6 +54,15 @@ func init() {
 
 	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
+			Method:           "GetAdminByToken",
+			Router:           `/admin`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
+		beego.ControllerComments{
 			Method:           "Login",
 			Router:           `/login`,
 			AllowHTTPMethods: []string{"post"},
