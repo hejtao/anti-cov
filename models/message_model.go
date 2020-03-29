@@ -8,6 +8,8 @@ import (
 type Message struct {
 	Id int `json:"id"`
 
+	Name    string `json:"name"`
+	Email   string `json:"email"`
 	Content string `json:"content" orm:"size(2047)"`
 
 	Hidden     bool      `json:"hidden"`
