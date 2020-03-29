@@ -11,7 +11,7 @@ type Account struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 
-	Hidden     bool      `json:"hidden"`
+	Hidden     bool      `json:"hidden,omitempty"`
 	CreateTime time.Time `json:"create_time" orm:"auto_now_add;type(datetime)"`
 	UpdateTime time.Time `json:"update_time" orm:"auto_now;type(datetime)"`
 }

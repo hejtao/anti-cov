@@ -7,10 +7,6 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type PublicController struct {
-	BaseController
-}
-
 // @description 登录
 // @router /login [post]
 func (c *PublicController) Login() {

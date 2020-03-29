@@ -12,7 +12,7 @@ type Message struct {
 	Email   string `json:"email"`
 	Content string `json:"content" orm:"size(2047)"`
 
-	Hidden     bool      `json:"hidden"`
+	Hidden     bool      `json:"hidden,omitempty"`
 	CreateTime time.Time `json:"create_time" orm:"auto_now_add;type(datetime)"`
 	UpdateTime time.Time `json:"update_time" orm:"auto_now;type(datetime)"`
 

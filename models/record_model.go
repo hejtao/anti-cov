@@ -11,14 +11,21 @@ type Record struct {
 	Count int `json:"count"`
 	Type  int `json:"type"`
 
-	Hidden     bool      `json:"hidden"`
+	Hidden     bool      `json:"hidden,omitempty"`
 	CreateTime time.Time `json:"create_time" orm:"auto_now_add;type(datetime)"`
 	UpdateTime time.Time `json:"update_time" orm:"auto_now;type(datetime)"`
 }
 
-//func init() {
-// orm.RegisterModel(new(Record))
-//}
+var RecordType = []int{
+	0, // 主页
+	1, // 英语
+	2, // 意大利语
+	3, // 西班牙语
+}
+
+func init() {
+	orm.RegisterModel(new(Record))
+}
 
 func CreateRecord(record *Record) (int, error) {
 	id, err := orm.NewOrm().Insert(record)

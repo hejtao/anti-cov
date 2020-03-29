@@ -14,7 +14,7 @@ type Article struct {
 	Content string `json:"content" orm:"size(4095)"`
 	Section int    `json:"section"`
 
-	Hidden     bool      `json:"hidden"`
+	Hidden     bool      `json:"hidden,omitempty"`
 	CreateTime time.Time `json:"create_time" orm:"auto_now_add;type(datetime)"`
 	UpdateTime time.Time `json:"update_time" orm:"auto_now;type(datetime)"`
 }

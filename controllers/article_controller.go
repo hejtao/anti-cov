@@ -6,10 +6,6 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type PrivateController struct {
-	BaseController
-}
-
 // @description 创建
 // @router /article/create [post]
 func (c *PrivateController) CreateArticle() {

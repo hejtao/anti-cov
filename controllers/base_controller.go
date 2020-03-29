@@ -9,6 +9,14 @@ type BaseController struct {
 	beego.Controller
 }
 
+type PrivateController struct {
+	BaseController
+}
+
+type PublicController struct {
+	BaseController
+}
+
 // 返回结果的数据结构
 type Result struct {
 	Code    int         `json:"code"`
