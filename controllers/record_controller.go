@@ -34,13 +34,10 @@ func (c *PublicController) CreateRecord() {
 // @router /records [get]
 func (c *PublicController) GetRecords() {
 
-	page, err := c.GetInt("page")
-	if err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
-	}
+	records := make([]models.Record, 0)
+	_, _ = orm.NewOrm().QueryTable(new(models.Record)).All(&records, "Count", "Type")
 
-	c.ReturnSuccess(1, "ok", models.GetRecords(orm.NewCondition(), page))
+	c.ReturnSuccess(1, "ok", records)
 }
 
 // @description
