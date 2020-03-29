@@ -52,6 +52,15 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
+	beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PrivateController"],
+		beego.ControllerComments{
+			Method:           "DeleteMessage",
+			Router:           `/message/delete`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
 	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
 			Method:           "GetAdminByToken",
@@ -66,6 +75,24 @@ func init() {
 			Method:           "Login",
 			Router:           `/login`,
 			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
+		beego.ControllerComments{
+			Method:           "CreateMessage",
+			Router:           `/message/create`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
+		beego.ControllerComments{
+			Method:           "GetMessages",
+			Router:           `/messages`,
+			AllowHTTPMethods: []string{"get"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})

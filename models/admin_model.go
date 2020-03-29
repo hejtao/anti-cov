@@ -14,6 +14,8 @@ type Admin struct {
 	Hidden     bool      `json:"hidden"`
 	CreateTime time.Time `json:"create_time" orm:"auto_now_add;type(datetime)"`
 	UpdateTime time.Time `json:"update_time" orm:"auto_now;type(datetime)"`
+
+	Messages []*Message `orm:"reverse(many)"`
 }
 
 func init() {
