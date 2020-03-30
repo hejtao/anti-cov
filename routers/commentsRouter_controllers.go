@@ -99,15 +99,6 @@ func init() {
 
 	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
-			Method:           "CreateRecord",
-			Router:           `/record/create`,
-			AllowHTTPMethods: []string{"post"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
-		beego.ControllerComments{
 			Method:           "IncreaseRecord",
 			Router:           `/record/increase`,
 			AllowHTTPMethods: []string{"get"},
