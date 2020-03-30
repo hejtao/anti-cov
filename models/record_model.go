@@ -2,15 +2,21 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"time"
 )
 
 type Record struct {
 	Id int `json:"id,omitempty"`
 
-	Count int `json:"count"`
-	Type  int `json:"type"`
+	Count   int `json:"count"`
+	Type    int `json:"type"`
+	Lang    int `json:"lang"`
+	Section int `json:"section"`
+	SecLang int `json:"sec_lang"`
 
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden     bool       `json:"hidden,omitempty"`
+	CreateTime *time.Time `json:"create_time,omitempty" orm:"auto_now_add;type(datetime)"`
+	UpdateTime *time.Time `json:"update_time,omitempty" orm:"auto_now;type(datetime)"`
 }
 
 var RecordType = []int{
