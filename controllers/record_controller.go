@@ -33,6 +33,12 @@ func (c *PublicController) IncreaseRecord() {
 	cond = cond.And("SecLang", sl)
 
 	ip := utils.GetRealIp(c.Ctx.Request)
+	city, country, continent := "", "", ""
+	if geo := utils.GetGeoWithIp(ip); geo != nil {
+		city = geo["city"]
+		country = geo["country"]
+		continent = geo["continent"]
+	}
 
 	if !orm.NewOrm().QueryTable(new(models.Record)).SetCond(cond).Exist() {
 		record := &models.Record{
@@ -45,8 +51,11 @@ func (c *PublicController) IncreaseRecord() {
 		recordId, _ := models.CreateRecord(record)
 
 		_, _ = models.CreateTimeline(&models.Timeline{
-			RecordId: recordId,
-			Ip:       ip,
+			RecordId:  recordId,
+			Ip:        ip,
+			City:      city,
+			Country:   country,
+			Continent: continent,
 		})
 
 		c.ReturnSuccess(1, "ok", nil)
@@ -61,8 +70,11 @@ func (c *PublicController) IncreaseRecord() {
 	_ = orm.NewOrm().QueryTable(new(models.Record)).SetCond(cond).One(record, "Id")
 
 	_, _ = models.CreateTimeline(&models.Timeline{
-		RecordId: record.Id,
-		Ip:       ip,
+		RecordId:  record.Id,
+		Ip:        ip,
+		City:      city,
+		Country:   country,
+		Continent: continent,
 	})
 
 	c.ReturnSuccess(1, "ok", nil)

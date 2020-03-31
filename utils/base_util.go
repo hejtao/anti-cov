@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -170,17 +171,35 @@ func GetRealIp(req *http.Request) (ip string) {
 }
 
 func GetGeoWithIp(ip string) map[string]string {
-	db, _ := geoip2.Open("static/GeoLite2-City.mmdb")
+	if !MatchIp(ip) {
+		return nil
+	}
+
+	db, err := geoip2.Open("static/GeoLite2-City.mmdb")
 	defer func() {
 		_ = db.Close()
 	}()
 
-	g, _ := db.City(net.ParseIP(ip))
+	if err != nil {
+		return nil
+	}
+
+	g, err := db.City(net.ParseIP(ip))
+	if err != nil {
+		return nil
+	}
+
 	geo := make(map[string]string)
 	geo["city"] = g.City.Names["zh-CN"]
 	geo["country"] = g.Country.Names["zh-CN"]
 	geo["continent"] = g.Continent.Names["zh-CN"]
-	geo["continent"] = g.Continent.Names["zh-CN"]
 
 	return geo
+}
+
+func MatchIp(ip string) bool {
+	if m, _ := regexp.MatchString(IpPattern, ip); !m {
+		return false
+	}
+	return true
 }
