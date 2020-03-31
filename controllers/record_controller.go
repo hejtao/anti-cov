@@ -39,7 +39,11 @@ func (c *PublicController) IncreaseRecord() {
 			Section: s,
 			SecLang: sl,
 		}
-		_, _ = models.CreateRecord(record)
+		recordId, _ := models.CreateRecord(record)
+
+		_, _ = models.CreateTimeline(&models.Timeline{
+			RecordId: recordId,
+		})
 
 		c.ReturnSuccess(1, "ok", nil)
 		return
@@ -47,6 +51,13 @@ func (c *PublicController) IncreaseRecord() {
 
 	_, _ = orm.NewOrm().QueryTable(new(models.Record)).SetCond(cond).Update(orm.Params{
 		"count": orm.ColValue(orm.ColAdd, 1),
+	})
+
+	record := new(models.Record)
+	_ = orm.NewOrm().QueryTable(new(models.Record)).SetCond(cond).One(record, "Id")
+
+	_, _ = models.CreateTimeline(&models.Timeline{
+		RecordId: record.Id,
 	})
 
 	c.ReturnSuccess(1, "ok", nil)
