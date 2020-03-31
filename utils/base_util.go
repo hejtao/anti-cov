@@ -198,10 +198,10 @@ func GetGeoWithIp(ip string) map[string]string {
 	geo["province"] = ""
 	if len(g.Subdivisions) > 0 {
 		geo["province"] = g.Subdivisions[0].Names["zh-CN"]
-	}
 
-	if geo["province"] == "" {
-		geo["province"] = g.Subdivisions[0].Names["en"]
+		if geo["province"] == "" {
+			geo["province"] = g.Subdivisions[0].Names["en"]
+		}
 	}
 
 	geo["country"] = g.Country.Names["zh-CN"]
