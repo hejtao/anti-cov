@@ -33,9 +33,10 @@ func (c *PublicController) IncreaseRecord() {
 	cond = cond.And("SecLang", sl)
 
 	ip := utils.GetRealIp(c.Ctx.Request)
-	city, country, continent := "", "", ""
+	city, province, country, continent := "", "", "", ""
 	if geo := utils.GetGeoWithIp(ip); geo != nil {
 		city = geo["city"]
+		province = geo["province"]
 		country = geo["country"]
 		continent = geo["continent"]
 	}
@@ -54,6 +55,7 @@ func (c *PublicController) IncreaseRecord() {
 			RecordId:  recordId,
 			Ip:        ip,
 			City:      city,
+			Province:  province,
 			Country:   country,
 			Continent: continent,
 		})
@@ -73,6 +75,7 @@ func (c *PublicController) IncreaseRecord() {
 		RecordId:  record.Id,
 		Ip:        ip,
 		City:      city,
+		Province:  province,
 		Country:   country,
 		Continent: continent,
 	})

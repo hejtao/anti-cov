@@ -191,8 +191,28 @@ func GetGeoWithIp(ip string) map[string]string {
 
 	geo := make(map[string]string)
 	geo["city"] = g.City.Names["zh-CN"]
+	if geo["city"] == "" {
+		geo["city"] = g.City.Names["en"]
+	}
+
+	geo["province"] = ""
+	if len(g.Subdivisions) > 0 {
+		geo["province"] = g.Subdivisions[0].Names["zh-CN"]
+	}
+
+	if geo["province"] == "" {
+		geo["province"] = g.Subdivisions[0].Names["en"]
+	}
+
 	geo["country"] = g.Country.Names["zh-CN"]
+	if geo["country"] == "" {
+		geo["country"] = g.Country.Names["en"]
+	}
+
 	geo["continent"] = g.Continent.Names["zh-CN"]
+	if geo["continent"] == "" {
+		geo["continent"] = g.Continent.Names["en"]
+	}
 
 	return geo
 }

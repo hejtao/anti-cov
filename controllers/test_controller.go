@@ -6,5 +6,5 @@ import "antiCov-server/utils"
 // @router /get [get]
 func (c *PublicController) TestGet() {
 
-	c.ReturnSuccess(1, "ok", utils.MatchIp(c.GetString("ip")))
+	c.ReturnSuccess(1, "ok", utils.GetGeoWithIp(c.GetString("ip")))
 }

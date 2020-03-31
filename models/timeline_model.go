@@ -19,6 +19,7 @@ type Timeline struct {
 	Ip        string `json:"ip"`
 	Continent string `json:"continent"`
 	Country   string `json:"country"`
+	Province  string `json:"province"`
 	City      string `json:"city"`
 
 	Hidden bool `json:"hidden,omitempty"`
