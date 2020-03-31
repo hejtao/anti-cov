@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"antiCov-server/models"
+	"antiCov-server/utils"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -11,7 +12,7 @@ func (c *PublicController) GetRecords() {
 	records := make([]models.Record, 0)
 
 	_, _ = orm.NewOrm().QueryTable(new(models.Record)).
-		All(&records, "Count", "Type", "Lang", "Section", "SecLang")
+		All(&records, "Id", "Count", "Type", "Lang", "Section", "SecLang")
 
 	c.ReturnSuccess(1, "ok", records)
 }
@@ -31,6 +32,8 @@ func (c *PublicController) IncreaseRecord() {
 	cond = cond.And("Section", s)
 	cond = cond.And("SecLang", sl)
 
+	ip := utils.GetRealIp(c.Ctx.Request)
+
 	if !orm.NewOrm().QueryTable(new(models.Record)).SetCond(cond).Exist() {
 		record := &models.Record{
 			Count:   1,
@@ -43,6 +46,7 @@ func (c *PublicController) IncreaseRecord() {
 
 		_, _ = models.CreateTimeline(&models.Timeline{
 			RecordId: recordId,
+			Ip:       ip,
 		})
 
 		c.ReturnSuccess(1, "ok", nil)
@@ -58,6 +62,7 @@ func (c *PublicController) IncreaseRecord() {
 
 	_, _ = models.CreateTimeline(&models.Timeline{
 		RecordId: record.Id,
+		Ip:       ip,
 	})
 
 	c.ReturnSuccess(1, "ok", nil)

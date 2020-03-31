@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
+	"net/http"
 	"strconv"
 	"strings"
 	"time"
@@ -153,4 +154,15 @@ func Encrypt(password string) string {
 	_, _ = io.WriteString(h, "dB924YD"+password+"xuLwLdj")
 	return fmt.Sprintf("%x", h.Sum(nil))
 
+}
+
+func GetRealIp(req *http.Request) (ip string) {
+
+	if ip = req.Header.Get("X-Real-IP"); ip != "" {
+		return
+	} else if ip = req.Header.Get("X-Forwarded-For"); ip != "" {
+		return
+	}
+
+	return
 }

@@ -10,12 +10,16 @@ type Timeline struct {
 
 	RecordId int `json:"record_id"`
 
-	Date   string `json:"date"`
-	Hour   string `json:"hour"`
-	Minute string `json:"minute"`
-	Second string `json:"time"`
-
+	Date    string `json:"date"`
+	Hour    string `json:"hour"`
+	Minute  string `json:"minute"`
+	Second  string `json:"time"`
 	PerHour string `json:"per_hour"`
+
+	Ip        string `json:"ip"`
+	Continent string `json:"continent"`
+	Country   string `json:"country"`
+	City      string `json:"city"`
 
 	Hidden bool `json:"hidden,omitempty"`
 }
