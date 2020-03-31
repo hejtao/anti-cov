@@ -3,8 +3,10 @@ package utils
 import (
 	"crypto/sha256"
 	"fmt"
+	"github.com/oschwald/geoip2-golang"
 	"io"
 	"math/rand"
+	"net"
 	"net/http"
 	"strconv"
 	"strings"
@@ -165,4 +167,20 @@ func GetRealIp(req *http.Request) (ip string) {
 	}
 
 	return
+}
+
+func GetGeoWithIp(ip string) map[string]string {
+	db, _ := geoip2.Open("static/GeoLite2-City.mmdb")
+	defer func() {
+		_ = db.Close()
+	}()
+
+	g, _ := db.City(net.ParseIP(ip))
+	geo := make(map[string]string)
+	geo["city"] = g.City.Names["zh-CN"]
+	geo["country"] = g.Country.Names["zh-CN"]
+	geo["continent"] = g.Continent.Names["zh-CN"]
+	geo["continent"] = g.Continent.Names["zh-CN"]
+
+	return geo
 }
