@@ -20,6 +20,9 @@ func (c *PublicController) GetRecords() {
 // @description
 // @router /record/increase [get]
 func (c *PublicController) IncreaseRecord() {
+	terminal := c.GetString("terminal")
+	from := c.GetString("from")
+
 	cond := orm.NewCondition()
 
 	t, _ := c.GetInt("type")
@@ -51,14 +54,19 @@ func (c *PublicController) IncreaseRecord() {
 		}
 		recordId, _ := models.CreateRecord(record)
 
-		_, _ = models.CreateTimeline(&models.Timeline{
+		if _, err := models.CreateTimeline(&models.Timeline{
 			RecordId:  recordId,
 			Ip:        ip,
 			City:      city,
 			Province:  province,
 			Country:   country,
 			Continent: continent,
-		})
+			Terminal:  terminal,
+			From:      from,
+		}); err != nil {
+			c.ReturnSuccess(1, err.Error(), nil)
+			return
+		}
 
 		c.ReturnSuccess(1, "ok", nil)
 		return
@@ -71,14 +79,19 @@ func (c *PublicController) IncreaseRecord() {
 	record := new(models.Record)
 	_ = orm.NewOrm().QueryTable(new(models.Record)).SetCond(cond).One(record, "Id")
 
-	_, _ = models.CreateTimeline(&models.Timeline{
+	if _, err := models.CreateTimeline(&models.Timeline{
 		RecordId:  record.Id,
 		Ip:        ip,
 		City:      city,
 		Province:  province,
 		Country:   country,
 		Continent: continent,
-	})
+		Terminal:  terminal,
+		From:      from,
+	}); err != nil {
+		c.ReturnSuccess(1, err.Error(), nil)
+		return
+	}
 
 	c.ReturnSuccess(1, "ok", nil)
 }

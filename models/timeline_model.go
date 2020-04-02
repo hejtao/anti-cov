@@ -22,6 +22,9 @@ type Timeline struct {
 	Province  string `json:"province"`
 	City      string `json:"city"`
 
+	Terminal string `json:"terminal"`
+	From     string `json:"from"`
+
 	Hidden bool `json:"hidden,omitempty"`
 }
 
