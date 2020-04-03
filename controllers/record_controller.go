@@ -9,12 +9,8 @@ import (
 // @description 获取列表
 // @router /records [get]
 func (c *PublicController) GetRecords() {
-	records := make([]models.Record, 0)
-
-	_, _ = orm.NewOrm().QueryTable(new(models.Record)).
-		All(&records, "Id", "Count", "Type", "Lang", "Section", "SecLang")
-
-	c.ReturnSuccess(1, "ok", records)
+	page, _ := c.GetInt("page")
+	c.ReturnSuccess(1, "ok", models.GetRecords(nil, page, "Id", "Count", "Type", "Lang", "Section", "SecLang"))
 }
 
 // @description

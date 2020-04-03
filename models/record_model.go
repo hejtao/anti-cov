@@ -19,13 +19,6 @@ type Record struct {
 	UpdateTime *time.Time `json:"update_time,omitempty" orm:"auto_now;type(datetime)"`
 }
 
-var RecordType = []int{
-	0, // 主页
-	1, // 英语
-	2, // 意大利语
-	3, // 西班牙语
-}
-
 func init() {
 	orm.RegisterModel(new(Record))
 }
@@ -66,17 +59,16 @@ func DeleteRecordsByIds(hard bool, ids ...int) error {
 	return err
 }
 
-func GetRecords(cond *orm.Condition, page int, rel ...interface{}) interface{} {
+func GetRecords(cond *orm.Condition, page int, cols ...string) interface{} {
 	o := orm.NewOrm()
 	records := make([]*Record, 0)
 
 	if page > 0 {
 		_, _ = o.QueryTable(new(Record)).
 			SetCond(cond).Filter("hidden", false).
-			RelatedSel(rel...).
 			OrderBy("-Id").
 			Limit(10, 10*(page-1)).
-			All(&records)
+			All(&records, cols...)
 
 		data := make(map[string]interface{})
 		data["count"], _ = o.QueryTable(new(Record)).SetCond(cond).Filter("hidden", false).Count()
@@ -87,8 +79,7 @@ func GetRecords(cond *orm.Condition, page int, rel ...interface{}) interface{} {
 
 	_, _ = o.QueryTable(new(Record)).
 		SetCond(cond).Filter("hidden", false).
-		RelatedSel(rel...).
 		OrderBy("-Id").
-		All(&records)
+		All(&records, cols...)
 	return records
 }
