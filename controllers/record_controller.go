@@ -58,7 +58,7 @@ func (c *PublicController) IncreaseRecord() {
 			Country:   country,
 			Continent: continent,
 			Terminal:  terminal,
-			From:      from,
+			Source:    from,
 		}); err != nil {
 			c.ReturnSuccess(1, err.Error(), nil)
 			return
@@ -83,7 +83,7 @@ func (c *PublicController) IncreaseRecord() {
 		Country:   country,
 		Continent: continent,
 		Terminal:  terminal,
-		From:      from,
+		Source:    from,
 	}); err != nil {
 		c.ReturnSuccess(1, err.Error(), nil)
 		return

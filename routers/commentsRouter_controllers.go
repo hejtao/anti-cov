@@ -124,4 +124,13 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
+	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
+		beego.ControllerComments{
+			Method:           "GetAllTimelines",
+			Router:           `/timeline/from`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
 }

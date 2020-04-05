@@ -23,7 +23,7 @@ type Timeline struct {
 	City      string `json:"city"`
 
 	Terminal string `json:"terminal"`
-	From     string `json:"from"`
+	Source   string `json:"source"`
 
 	Hidden bool `json:"hidden,omitempty"`
 }
