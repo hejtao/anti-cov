@@ -33,16 +33,17 @@ func (c *PublicController) CreateMessage() {
 func (c *PublicController) GetMessages() {
 	//currAdmin := models.GetAdminByAccountId(c.Ctx.Input.GetData("accountId").(int))
 
-	page, err := c.GetInt("page")
-	if err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+	page, _ := c.GetInt("page")
+	size, _ := c.GetInt("size")
+
+	if size == 0 {
+		size = 10
 	}
 
 	cond := orm.NewCondition()
 	//cond = cond.And("admin_id", currAdmin.Id)
 
-	c.ReturnSuccess(1, "ok", models.GetMessages(cond, page))
+	c.ReturnSuccess(1, "ok", models.GetMessages(cond, page, size))
 }
 
 // @description 删除

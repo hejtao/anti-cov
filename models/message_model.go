@@ -59,7 +59,11 @@ func DeleteMessagesByIds(hard bool, ids ...int) error {
 	return err
 }
 
-func GetMessages(cond *orm.Condition, page int, rel ...interface{}) interface{} {
+func GetMessages(cond *orm.Condition, page, size int, rel ...interface{}) interface{} {
+	if size < 1 {
+		size = 10
+	}
+
 	o := orm.NewOrm()
 	messages := make([]*Message, 0)
 
@@ -68,12 +72,22 @@ func GetMessages(cond *orm.Condition, page int, rel ...interface{}) interface{} 
 			SetCond(cond).Filter("hidden", false).
 			RelatedSel(rel...).
 			OrderBy("-Id").
-			Limit(10, 10*(page-1)).
+			Limit(size, size*(page-1)).
 			All(&messages)
 
 		data := make(map[string]interface{})
-		data["count"], _ = o.QueryTable(new(Message)).SetCond(cond).Filter("hidden", false).Count()
-		data["messages"] = messages
+		total, _ := o.QueryTable(new(Message)).SetCond(cond).Filter("hidden", false).Count()
+		data["totalCount"] = total
+		data["pageSize"] = size
+		data["pageIndex"] = page
+
+		if int(total)%size == 0 {
+			data["pageCount"] = int(total) / size
+		} else {
+			data["pageCount"] = int(total)/size + 1
+		}
+
+		data["list"] = messages
 
 		return data
 	}

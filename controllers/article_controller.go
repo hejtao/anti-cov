@@ -36,6 +36,7 @@ func (c *PrivateController) GetArticles() {
 
 	type postDate struct {
 		Page     int   `json:"page"`
+		Size     int   `json:"size"`
 		Sections []int `json:"sections"`
 	}
 
@@ -47,7 +48,12 @@ func (c *PrivateController) GetArticles() {
 		cond = cond.And("Section__in", p.Sections)
 	}
 
-	c.ReturnSuccess(1, "ok", models.GetArticles(cond, p.Page))
+	size := 10
+	if p.Size > 0 {
+		size = p.Size
+	}
+
+	c.ReturnSuccess(1, "ok", models.GetArticles(cond, p.Page, size))
 }
 
 // @description 删除
