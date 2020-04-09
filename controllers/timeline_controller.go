@@ -6,9 +6,23 @@ import (
 )
 
 // @description
-// @router /timeline/graph1 [get]
-func (c *PublicController) GetGraph1Data() {
+// @router /timeline/vertical [get]
+func (c *PublicController) GetVerticalGraph() {
 	country := c.GetString("country")
+	opt, _ := c.GetInt("option")
+	switch opt {
+	case 1:
+		c.ReturnSuccess(1, "ok", getVerticalGraph1(country))
+	case 2:
+		c.ReturnSuccess(1, "ok", getVerticalGraph2(country))
+	case 3:
+		c.ReturnSuccess(1, "ok", getVerticalGraph3(country))
+	case 4:
+		c.ReturnSuccess(1, "ok", getVerticalGraph4(country))
+	}
+}
+
+func getVerticalGraph1(country string) interface{} {
 	if country != "" {
 		country = fmt.Sprintf("AND country = '%s' ", country)
 	}
@@ -22,8 +36,7 @@ func (c *PublicController) GetGraph1Data() {
 	sources := make([]string, 0)
 	sql := "SELECT DISTINCT source FROM timeline WHERE source != '';"
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&sources); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	ds := make([]*data, 0)
@@ -32,8 +45,7 @@ func (c *PublicController) GetGraph1Data() {
 		country,
 	)
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&ds); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	retData := make(map[string]map[string]interface{})
@@ -56,13 +68,10 @@ func (c *PublicController) GetGraph1Data() {
 		retData2 = append(retData2, v)
 	}
 
-	c.ReturnSuccess(1, "ok", retData2)
+	return retData2
 }
 
-// @description
-// @router /timeline/graph2 [get]
-func (c *PublicController) GetGraph2Data() {
-	country := c.GetString("country")
+func getVerticalGraph2(country string) interface{} {
 	if country != "" {
 		country = fmt.Sprintf("AND country = '%s' ", country)
 	}
@@ -76,8 +85,7 @@ func (c *PublicController) GetGraph2Data() {
 	terminals := make([]string, 0)
 	sql := "SELECT DISTINCT terminal FROM timeline WHERE terminal != '';"
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&terminals); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	ds := make([]*data, 0)
@@ -86,8 +94,7 @@ func (c *PublicController) GetGraph2Data() {
 		country,
 	)
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&ds); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	retData := make(map[string]map[string]interface{})
@@ -111,13 +118,10 @@ func (c *PublicController) GetGraph2Data() {
 		retData2 = append(retData2, v)
 	}
 
-	c.ReturnSuccess(1, "ok", retData2)
+	return retData2
 }
 
-// @description
-// @router /timeline/graph3 [get]
-func (c *PublicController) GetGraph3Data() {
-	country := c.GetString("country")
+func getVerticalGraph3(country string) interface{} {
 	if country != "" {
 		country = fmt.Sprintf("AND country = '%s' ", country)
 	}
@@ -131,8 +135,7 @@ func (c *PublicController) GetGraph3Data() {
 	sources := make([]string, 0)
 	sql := "SELECT DISTINCT source FROM timeline WHERE source != '';"
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&sources); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	ds := make([]*data, 0)
@@ -141,8 +144,7 @@ func (c *PublicController) GetGraph3Data() {
 		country,
 	)
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&ds); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	retData := make(map[string]map[string]interface{})
@@ -166,13 +168,10 @@ func (c *PublicController) GetGraph3Data() {
 		retData2 = append(retData2, v)
 	}
 
-	c.ReturnSuccess(1, "ok", retData2)
+	return retData2
 }
 
-// @description
-// @router /timeline/graph4 [get]
-func (c *PublicController) GetGraph4Data() {
-	country := c.GetString("country")
+func getVerticalGraph4(country string) interface{} {
 	if country != "" {
 		country = fmt.Sprintf("AND country = '%s' ", country)
 	}
@@ -186,8 +185,7 @@ func (c *PublicController) GetGraph4Data() {
 	terminals := make([]string, 0)
 	sql := "SELECT DISTINCT terminal FROM timeline WHERE terminal != '';"
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&terminals); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	ds := make([]*data, 0)
@@ -196,8 +194,7 @@ func (c *PublicController) GetGraph4Data() {
 		country,
 	)
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&ds); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	retData := make(map[string]map[string]interface{})
@@ -221,7 +218,7 @@ func (c *PublicController) GetGraph4Data() {
 		retData2 = append(retData2, v)
 	}
 
-	c.ReturnSuccess(1, "ok", retData2)
+	return retData2
 }
 
 // @description
@@ -239,8 +236,13 @@ func (c *PublicController) GetTimelineCountries() {
 }
 
 // @description
-// @router /timeline/continent [get]
-func (c *PublicController) GetContinentData() {
+// @router /timeline/percent [get]
+func (c *PublicController) GetPercentGraph() {
+
+	c.ReturnSuccess(1, "ok", getPercentGraph2())
+}
+
+func getPercentGraph2() interface{} {
 	type data struct {
 		Continent string  `json:"continent"`
 		Total     float32 `json:"total"`
@@ -249,8 +251,7 @@ func (c *PublicController) GetContinentData() {
 	ds := make([]data, 0)
 	sql := "SELECT continent, count(*) total FROM timeline WHERE record_id IN (77, 78) GROUP BY continent;"
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&ds); err != nil {
-		c.ReturnSuccess(2, err.Error(), nil)
-		return
+		return nil
 	}
 
 	var sum float32
@@ -263,5 +264,5 @@ func (c *PublicController) GetContinentData() {
 		retData[d.Continent] = d.Total / sum
 	}
 
-	c.ReturnSuccess(1, "ok", retData)
+	return retData
 }

@@ -126,15 +126,6 @@ func init() {
 
 	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
-			Method:           "GetContinentData",
-			Router:           `/timeline/continent`,
-			AllowHTTPMethods: []string{"get"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
-		beego.ControllerComments{
 			Method:           "GetTimelineCountries",
 			Router:           `/timeline/countries`,
 			AllowHTTPMethods: []string{"get"},
@@ -144,8 +135,8 @@ func init() {
 
 	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
-			Method:           "GetGraph1Data",
-			Router:           `/timeline/graph1`,
+			Method:           "GetPercentGraph",
+			Router:           `/timeline/percent`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
@@ -153,26 +144,8 @@ func init() {
 
 	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
-			Method:           "GetGraph2Data",
-			Router:           `/timeline/graph2`,
-			AllowHTTPMethods: []string{"get"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
-		beego.ControllerComments{
-			Method:           "GetGraph3Data",
-			Router:           `/timeline/graph3`,
-			AllowHTTPMethods: []string{"get"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
-		beego.ControllerComments{
-			Method:           "GetGraph4Data",
-			Router:           `/timeline/graph4`,
+			Method:           "GetVerticalGraph",
+			Router:           `/timeline/vertical`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
