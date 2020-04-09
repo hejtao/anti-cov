@@ -126,6 +126,15 @@ func init() {
 
 	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
 		beego.ControllerComments{
+			Method:           "GetContinentData",
+			Router:           `/timeline/continent`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"] = append(beego.GlobalControllerRouter["antiCov-server/controllers:PublicController"],
+		beego.ControllerComments{
 			Method:           "GetTimelineCountries",
 			Router:           `/timeline/countries`,
 			AllowHTTPMethods: []string{"get"},

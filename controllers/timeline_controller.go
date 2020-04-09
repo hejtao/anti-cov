@@ -237,3 +237,31 @@ func (c *PublicController) GetTimelineCountries() {
 
 	c.ReturnSuccess(1, "ok", countries)
 }
+
+// @description
+// @router /timeline/continent [get]
+func (c *PublicController) GetContinentData() {
+	type data struct {
+		Continent string  `json:"continent"`
+		Total     float32 `json:"total"`
+	}
+
+	ds := make([]data, 0)
+	sql := "SELECT continent, count(*) total FROM timeline WHERE record_id IN (77, 78) GROUP BY continent;"
+	if _, err := orm.NewOrm().Raw(sql).QueryRows(&ds); err != nil {
+		c.ReturnSuccess(2, err.Error(), nil)
+		return
+	}
+
+	var sum float32
+	for _, d := range ds {
+		sum += d.Total
+	}
+
+	retData := make(map[string]float32)
+	for _, d := range ds {
+		retData[d.Continent] = d.Total / sum
+	}
+
+	c.ReturnSuccess(1, "ok", retData)
+}
