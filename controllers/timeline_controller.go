@@ -244,25 +244,28 @@ func (c *PublicController) GetPercentGraph() {
 
 func getPercentGraph2() interface{} {
 	type data struct {
-		Continent string  `json:"continent"`
-		Total     float32 `json:"total"`
+		Country string `json:"country"`
+		Total   int    `json:"total"`
 	}
 
 	ds := make([]data, 0)
-	sql := "SELECT continent, count(*) total FROM timeline WHERE record_id IN (77, 78) GROUP BY continent;"
+	sql := "SELECT country, count(*) total FROM timeline WHERE record_id IN (77, 78) AND country != '' GROUP BY country ORDER BY total DESC LIMIT 8;"
 	if _, err := orm.NewOrm().Raw(sql).QueryRows(&ds); err != nil {
 		return nil
 	}
 
-	var sum float32
+	retData := make(map[string]int)
 	for _, d := range ds {
-		sum += d.Total
+		retData[d.Country] = d.Total
 	}
 
-	retData := make(map[string]float32)
-	for _, d := range ds {
-		retData[d.Continent] = d.Total / sum
+	sum := 0
+	sql = "SELECT count(*) sum FROM timeline WHERE record_id IN (77, 78);"
+	if err := orm.NewOrm().Raw(sql).QueryRow(&sum); err != nil {
+		return nil
 	}
+
+	retData["count"] = sum
 
 	return retData
 }
